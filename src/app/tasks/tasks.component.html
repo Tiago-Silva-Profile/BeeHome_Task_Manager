@@ -1,0 +1,45 @@
+<div class="container mt-4">
+  <h2 class="text-center" style="color: #F8DD00;">Gerenciamento de Tarefas</h2>
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <button class="btn btn-primary" (click)="openModal()">Adicionar Tarefa</button>
+    <div class="form-group">
+      <select class="form-control" [(ngModel)]="filterStatus" (change)="applyFilter()">
+        <option value="">Todos os Status</option>
+        <option value="PENDING">Pendente</option>
+        <option value="IN_PROGRESS">Em Progresso</option>
+        <option value="COMPLETED">Concluído</option>
+      </select>
+    </div>
+  </div>
+  <table class="table table-striped table-bordered">
+    <thead class="thead-dark">
+      <tr>
+        <th>Título</th>
+        <th>Descrição</th>
+        <th>Status</th>
+        <th>Data de Criação</th>
+        <th>Deadline</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let task of paginatedTasks">
+        <td>{{ task.title }}</td>
+        <td>{{ task.description }}</td>
+        <td>{{ task.status }}</td>
+        <td>{{ task.creationDate | date }}</td>
+        <td>{{ task.deadline | date }}</td>
+        <td>
+          <button class="btn btn-warning btn-sm" (click)="editTask(task)">Editar</button>
+          <button class="btn btn-danger btn-sm" (click)="deleteTask(task.id)">Excluir</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <!-- <pagination
+    [totalItems]="tasks.length"
+    [(ngModel)]="currentPage"
+    [itemsPerPage]="itemsPerPage"
+    (pageChanged)="onPageChange($event)">
+  </pagination> -->
+</div>
