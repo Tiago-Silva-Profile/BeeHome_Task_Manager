@@ -5,9 +5,8 @@ import { TasksComponent } from "./tasks/tasks.component";
 @Component({
   selector: 'app-root',
   imports: [
-    RouterOutlet,
     TasksComponent
-  ],
+],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
