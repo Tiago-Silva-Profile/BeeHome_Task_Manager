@@ -16,8 +16,9 @@ import * as bootstrap from 'bootstrap';
   styleUrl: './tasks.component.css'
 })
 export class TasksComponent implements OnInit {
-  filterStatus = '';
   tasks: any[] = []; // Array para armazenar as tarefas
+  filterStatus: string = ''; // Status filtrado
+  filteredTasks  = this.tasks;
   itemsPerPage: number = 10; // Número de itens por página
   currentPage: number = 1; // Página atual
   paginatedTasks: any[] = []; // Tarefas exibidas na página atual
@@ -78,25 +79,23 @@ export class TasksComponent implements OnInit {
     this.updatePagination();
   }
 
-  applyFilter() {
-    this.updatePagination();
-  }
-
-  // updatePagination() {
+  // applyFilter() {
+  //   if (this.filterStatus) {
+  //     // Filtra as tarefas com base no status selecionado
+  //     this.filteredTasks = this.tasks.filter(
+  //       (task) => task.status === this.filterStatus
+  //     );
+  //   } else {
+  //     // Se não houver filtro, exibe todas as tarefas
+  //     this.filteredTasks = this.tasks;
+  //   }
+  //   this.currentPage = 1; // Reseta a página ao aplicar o filtro
+  //   this.updatePagination();
   // }
 
   onPageChange(event: any) {
     this.currentPage = event.page;
     this.updatePagination();
-  }
-
-  openModal() {
-    // Abrir modal para adicionar ou editar
-  }
-
-  editTask(task: any) {
-    this.openModal();
-    // Lógica de edição
   }
 
   // Método para atualizar a paginação
@@ -151,6 +150,37 @@ export class TasksComponent implements OnInit {
     }
   }
 
+  // ---------------------Filtro---------------------------------------
+
+  // Função para aplicar o filtro
+  applyFilter(): void {
+    if (this.filterStatus) {
+      // Filtra as tarefas com base no status selecionado
+      this.filteredTasks = this.tasks.filter(
+        (task) => task.status === this.filterStatus
+      );
+    } else {
+      // Se não houver filtro, exibe todas as tarefas
+      this.filteredTasks = this.tasks;
+    }
+    this.currentPage = 1; // Reseta a página ao aplicar o filtro
+    this.updatePagination();
+  }
+
+  // // Navegação entre páginas
+  // goToPreviousPage(): void {
+  //   if (this.currentPage > 1) {
+  //     this.currentPage--;
+  //   }
+  // }
+
+  // goToNextPage(): void {
+  //   const totalPages = Math.ceil(this.filteredTasks.length / this.itemsPerPage);
+  //   if (this.currentPage < totalPages) {
+  //     this.currentPage++;
+  //   }
+  // }
+
 
   // ---------------------Modal de Editar------------------------------
 
@@ -179,6 +209,7 @@ export class TasksComponent implements OnInit {
         modal?.hide(); // Fecha o modal
       }
     }
+    this.updatePagination();
   }
 
 
@@ -204,5 +235,6 @@ export class TasksComponent implements OnInit {
         this.tasks.splice(index, 1);
       }
     }
+    this.updatePagination();
   }
 }
