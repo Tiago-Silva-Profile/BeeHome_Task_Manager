@@ -1,0 +1,81 @@
+<div class="container mt-5">
+  <h2 class="text-center text-primary">Criar Nova Tarefa</h2>
+  <form [formGroup]="taskForm" class="mt-4">
+    <div class="mb-3">
+      <label for="title" class="form-label">Título</label>
+      <input
+        type="text"
+        id="title"
+        class="form-control"
+        formControlName="title"
+        placeholder="Digite o título da tarefa"
+      />
+      <div
+        *ngIf="taskForm.get('title')?.invalid && taskForm.get('title')?.touched"
+        class="text-danger"
+      >
+        O título é obrigatório.
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="description" class="form-label">Descrição</label>
+      <textarea
+        id="description"
+        class="form-control"
+        formControlName="description"
+        placeholder="Digite a descrição da tarefa"
+      ></textarea>
+      <div
+        *ngIf="
+          taskForm.get('description')?.invalid && taskForm.get('description')?.touched
+        "
+        class="text-danger"
+      >
+        A descrição é obrigatória.
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="status" class="form-label">Status</label>
+      <select
+        id="status"
+        class="form-select"
+        formControlName="status"
+      >
+        <option value="PENDING">Pendente</option>
+        <option value="IN_PROGRESS">Em Progresso</option>
+        <option value="COMPLETED">Concluído</option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label for="deadline" class="form-label">Prazo</label>
+      <input
+        type="date"
+        id="deadline"
+        class="form-control"
+        formControlName="deadline"
+      />
+    </div>
+
+    <!-- Botão de Salvar -->
+    <button
+      type="button"
+      class="btn btn-success w-100 mb-2"
+      [disabled]="taskForm.invalid"
+      (click)="saveTask()"
+    >
+      Salvar Tarefa
+    </button>
+
+    <!-- Botão de Retornar -->
+    <button
+      type="button"
+      class="btn btn-secondary w-100"
+      [routerLink]="'/tasks'"
+    >
+      Retornar
+    </button>
+  </form>
+</div>

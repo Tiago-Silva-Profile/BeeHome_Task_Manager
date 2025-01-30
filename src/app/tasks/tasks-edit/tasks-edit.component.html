@@ -1,0 +1,39 @@
+<!-- Modal -->
+<div *ngIf="isEditModalVisible" class="modal fade show" id="editTaskModal" tabindex="-1" aria-labelledby="editTaskModalLabel" aria-hidden="true" style="display: block;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editTaskModalLabel">Editar Tarefa</h5>
+        <button type="button" class="btn-close" (click)="closeEditModal()" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="editTitle" class="form-label">Título</label>
+            <input type="text" class="form-control" id="editTitle" [(ngModel)]="selectedTask.title" name="editTitle" />
+          </div>
+          <div class="mb-3">
+            <label for="editDescription" class="form-label">Descrição</label>
+            <textarea class="form-control" id="editDescription" [(ngModel)]="selectedTask.description" name="editDescription"></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="editStatus" class="form-label">Status</label>
+            <select class="form-select" id="editStatus" [(ngModel)]="selectedTask.status" name="editStatus">
+              <option value="PENDING">Pendente</option>
+              <option value="IN_PROGRESS">Em Progresso</option>
+              <option value="COMPLETED">Concluída</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="editDeadline" class="form-label">Prazo</label>
+            <input type="date" class="form-control" id="editDeadline" [(ngModel)]="selectedTask.deadline" name="editDeadline" />
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeEditModal()">Cancelar</button>
+        <button type="button" class="btn btn-primary" (click)="updateTask()">Salvar</button>
+      </div>
+    </div>
+  </div>
+</div>

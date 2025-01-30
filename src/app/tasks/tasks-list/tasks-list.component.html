@@ -1,0 +1,90 @@
+<div class="container mt-4">
+  <h2 class="text-center" style="color: #F8DD00;">Gerenciamento de Tarefas</h2>
+
+  <!-- Filtro de Tarefas -->
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <button [routerLink]="'/task/create'"type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#taskModal">
+      Adicionar Nova Tarefa
+    </button>
+  </div>
+
+  <!-- Filtro de Status -->
+  <div class="form-group">
+    <select class="form-control" [(ngModel)]="filterStatus" (change)="applyFilter()">
+      <option value="">Todos os Status</option>
+      <option value="PENDING">Pendente</option>
+      <option value="IN_PROGRESS">Em Progresso</option>
+      <option value="COMPLETED">Concluído</option>
+    </select>
+  </div>
+
+  <!-- Tabela de Tarefas -->
+  <div class="table-responsive mt-4">
+    <table class="table table-hover align-middle">
+      <thead class="table-dark text-center">
+        <tr>
+          <th>ID</th>
+          <th>Título</th>
+          <th>Descrição</th>
+          <th>Status</th>
+          <th>Data de Criação</th>
+          <th>Deadline</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let task of filteredTasks" class="text-center">
+          <td>{{ task.id }}</td>
+          <td>{{ task.title }}</td>
+          <td>{{ task.description }}</td>
+          <td>
+            <span
+              [ngClass]="{
+                'badge bg-success': task.status === 'COMPLETED',
+                'badge bg-warning text-dark': task.status === 'IN_PROGRESS',
+                'badge bg-danger': task.status === 'PENDING'
+              }"
+            >
+              {{ task.status }}
+            </span>
+          </td>
+          <td>{{ task.creationDate | date: 'short' }}</td>
+          <td>{{ task.deadline | date: 'short' }}</td>
+          <td>
+            <button
+              class="btn btn-warning btn-sm rounded-pill me-2 btn-shadow"
+              (click)="openEditModal(task)"
+            >
+              Editar
+            </button>
+            <button
+              class="btn btn-danger btn-sm rounded-pill btn-shadow"
+              (click)="openDeleteModal(task.id)"
+            >
+              Excluir
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Navegação de Páginas -->
+  <div class="d-flex justify-content-between align-items-center mt-3">
+    <button
+      class="btn btn-secondary btn-sm rounded-pill btn-shadow"
+      (click)="goToPreviousPage()"
+      [disabled]="currentPage === 1"
+    >
+      Página Anterior
+    </button>
+    <span class="fw-bold text-primary">Página {{ currentPage }}</span>
+    <button
+      class="btn btn-secondary btn-sm rounded-pill btn-shadow"
+      (click)="goToNextPage()"
+      [disabled]="currentPage * itemsPerPage >= tasks.length"
+    >
+      Próxima Página
+    </button>
+  </div>
+</div>
