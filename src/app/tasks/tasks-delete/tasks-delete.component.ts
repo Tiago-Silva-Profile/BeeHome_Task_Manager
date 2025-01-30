@@ -36,28 +36,28 @@ closeDeleteModal() {
 
  // Método para excluir a tarefa
  deleteTask(taskId: number): void  {
-   if (taskId !== null) {
-     // Chama o serviço para excluir a tarefa no backend
-     this.taskService.deleteTask(taskId).subscribe(
-       () => {
-         // Se a exclusão for bem-sucedida, remove a tarefa do array local
-         const index = this.tasks.findIndex((task) => task.id === taskId);
-         if (index > -1) {
-           this.tasks.splice(index, 1); // Remove a tarefa do array
-         }
+  if (taskId !== null) {
+    // Chama o serviço para excluir a tarefa no backend
+    this.taskService.deleteTask(taskId).subscribe(
+      () => {
+        // Se a exclusão for bem-sucedida, remove a tarefa do array local
+        const index = this.tasks.findIndex((task) => task.id === taskId);
+        if (index > -1) {
+          this.tasks.splice(index, 1); // Remove a tarefa do array
+        }
 
-         // Fecha o modal após a exclusão
-         this.closeDeleteModal();
+        // Fecha o modal após a exclusão
+        this.closeDeleteModal();
 
-         // Atualiza a paginação (se necessário)
-         this.updatePagination();
-       },
-       (error) => {
-         console.error('Erro ao excluir a tarefa', error);
-         // Você pode adicionar um tratamento de erro aqui, como exibir uma mensagem para o usuário
-       }
-     );
-   }
+        // Atualiza a paginação (se necessário)
+        this.updatePagination();
+      },
+      (error) => {
+        console.error('Erro ao excluir a tarefa', error);
+        // Você pode adicionar um tratamento de erro aqui, como exibir uma mensagem para o usuário
+      }
+    );
+  }
  }
 
  // Método para atualizar a paginação (opcional, dependendo da lógica)
